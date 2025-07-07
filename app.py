@@ -121,10 +121,26 @@ st.markdown("""
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 3rem;
-        color: #ffffff;
-        font-weight: bold;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .portrait-placeholder {
+        width: 80%;
+        height: 80%;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .portrait-placeholder::before {
+        content: '👤';
+        font-size: 4rem;
+        opacity: 0.7;
     }
     
     .branding-section {
@@ -478,7 +494,7 @@ st.markdown("""
         }
         
         .logo-text {
-            font-size: 1.5rem;
+            font-size: 2rem;
         }
         
         .main-content {
@@ -491,6 +507,29 @@ st.markdown("""
         
         .assistant-message {
             margin-right: 0;
+        }
+        
+        .entropy-header {
+            padding: 2rem 1rem;
+        }
+        
+        .entropy-banner-content {
+            flex-direction: column;
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .branding-section {
+            text-align: center;
+        }
+        
+        .entropy-logo {
+            justify-content: center;
+        }
+        
+        .portrait-container {
+            width: 150px;
+            height: 150px;
         }
     }
 </style>
