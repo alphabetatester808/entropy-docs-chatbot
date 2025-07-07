@@ -805,30 +805,21 @@ def main():
     if 'conversation_history' not in st.session_state:
         st.session_state.conversation_history = []
     
-    # Header with CSS-based recreations of your images
+    # Header with actual images from Imgur
     st.markdown("""
     <div class="entropy-header">
         <div class="entropy-banner-content">
             <div class="portrait-section">
                 <div class="portrait-container">
-                    <div class="portrait-recreation">
-                        <div class="portrait-bg"></div>
-                        <div class="portrait-figure-1"></div>
-                        <div class="portrait-figure-2"></div>
-                    </div>
+                    <img src="https://i.imgur.com/PGEpQIF.jpeg" alt="Entropy Portrait" 
+                         style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
             <div class="branding-section">
                 <div class="entropy-logo">
                     <div class="logo-icon">
-                        <div class="entropy-symbol">
-                            <div class="e-shape top-left"></div>
-                            <div class="e-shape top-right"></div>
-                            <div class="e-shape bottom-left"></div>
-                            <div class="e-shape bottom-right"></div>
-                            <div class="cross-vertical"></div>
-                            <div class="cross-horizontal"></div>
-                        </div>
+                        <img src="https://i.imgur.com/xSrtpTL.jpeg" alt="Entropy Logo" 
+                             style="width: 100%; height: 100%; object-fit: contain;">
                     </div>
                     <div class="logo-text">ENTROPY</div>
                 </div>
