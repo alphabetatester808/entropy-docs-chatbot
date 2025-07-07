@@ -15,6 +15,14 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Get API key from secrets
+def get_claude_api_key():
+    try:
+        return st.secrets["CLAUDE_API_KEY"]
+    except KeyError:
+        st.error("❌ Claude API key not found in secrets. Please contact the administrator.")
+        return None
+
 # Custom CSS with Entropy branding
 st.markdown("""
 <style>
@@ -270,13 +278,16 @@ Remember: You are specifically here to help with Entropy - the project that mine
             return response.content[0].text
             
         except anthropic.AuthenticationError:
-            return "❌ Invalid Claude API key. Please check your API key in the sidebar."
+            return "❌ Invalid Claude API key. Please check the API key configuration."
         except anthropic.RateLimitError:
             return "❌ Rate limit exceeded. Please wait a moment and try again."
         except Exception as e:
             return f"❌ Error generating response: {str(e)}"
 
 def main():
+    # Get API key from secrets
+    claude_api_key = get_claude_api_key()
+    
     # Header with Entropy branding
     st.markdown("""
     <div class="main-header">
@@ -288,20 +299,7 @@ def main():
     
     # Sidebar
     with st.sidebar:
-        st.header("🔑 API Configuration")
-        
-        # API Key input
-        claude_api_key = st.text_input(
-            "Claude API Key", 
-            type="password",
-            help="Get your API key from https://console.anthropic.com/",
-            placeholder="sk-ant-..."
-        )
-        
-        st.markdown("---")
-        
-        # Quick info about Entropy
-        st.markdown("### 🎲 About Entropy")
+        st.header("🎲 About Entropy")
         st.markdown("""
         **Entropy** is a unique DePIN memecoin where miners generate "useless" randomness using Ashlar devices to earn $ENT tokens.
         
@@ -327,11 +325,7 @@ def main():
         # Instructions
         st.markdown("### 📖 How to Use")
         st.markdown("""
-        1. **Enter API Key** above
-        2. **Click Initialize** below
-        3. **Ask questions** about Entropy!
-        
-        The AI knows all about:
+        Simply ask questions about Entropy below! The AI knows all about:
         - Setting up Ashlar miners
         - $ENT tokenomics
         - Community rules
@@ -341,42 +335,17 @@ def main():
     
     # Main content area
     if not claude_api_key:
-        # Welcome screen
-        col1, col2 = st.columns([2, 1])
-        
-        with col1:
-            st.markdown("### 🚀 Welcome to Entropy Documentation AI")
-            st.markdown("""
-            This AI assistant knows everything about the Entropy project from the official documentation. 
-            It can help you with:
-            
-            - **🔧 Setting up your Ashlar mining device**
-            - **💰 Understanding $ENT tokenomics and rewards**
-            - **📋 Learning community rules and guidelines**  
-            - **🎯 Grasping the philosophy of mining "nothing"**
-            - **⚡ Technical troubleshooting and optimization**
-            """)
-            
-            st.info("👈 Enter your Claude API key in the sidebar to get started!")
-        
-        with col2:
-            st.markdown('<div class="feature-box">', unsafe_allow_html=True)
-            st.markdown("### 🎲 Pure Entropy")
-            st.markdown("Mining nothingness, creating everything.")
-            st.markdown("**It's. Just. Entropy. LOL.**")
-            st.markdown('</div>', unsafe_allow_html=True)
-        
+        st.error("❌ Claude API key not configured. Please contact the administrator.")
         return
     
-    # Initialize chatbot
-    if st.button("🎲 Initialize Entropy AI Assistant", type="primary", use_container_width=True):
+    # Initialize chatbot automatically
+    if 'entropy_chatbot' not in st.session_state:
         try:
-            chatbot = EntropyDocsChatbot(claude_api_key)
-            st.session_state.entropy_chatbot = chatbot
-            st.balloons()
-            st.markdown('<div class="status-success">✅ Entropy AI Assistant is ready! Ask me anything about the project.</div>', unsafe_allow_html=True)
+            st.session_state.entropy_chatbot = EntropyDocsChatbot(claude_api_key)
+            st.success("✅ Entropy AI Assistant is ready!")
         except Exception as e:
             st.error(f"❌ Failed to initialize: {e}")
+            return
     
     # Chat interface
     if 'entropy_chatbot' in st.session_state:
@@ -411,7 +380,7 @@ def main():
             placeholder="e.g., How do I start mining entropy with my Ashlar device?"
         )
         
-        if st.button("🔍 Get Answer", type="secondary", use_container_width=True) and question:
+        if st.button("🔍 Get Answer", type="primary", use_container_width=True) and question:
             answer = st.session_state.entropy_chatbot.answer_entropy_question(question)
             
             st.markdown('<div class="chat-message">', unsafe_allow_html=True)
