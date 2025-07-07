@@ -1,4 +1,41 @@
-import streamlit as st
+# Header with CSS-based recreations of your images
+    st.markdown("""
+    <div class="entropy-header">
+        <div class="entropy-banner-content">
+            <div class="portrait-section">
+                <div class="portrait-container">
+                    <div class="portrait-recreation">
+                        <!-- CSS recreation of the artistic portrait -->
+                        <div class="portrait-bg"></div>
+                        <div class="portrait-figure-1"></div>
+                        <div class="portrait-figure-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="branding-section">
+                <div class="entropy-logo">
+                    <div class="logo-icon">
+                        <!-- Pure CSS recreation of Entropy logo -->
+                        <div class="entropy-symbol">
+                            <div class="e-shape top-left"></div>
+                            <div class="e-shape top-right"></div>
+                            <div class="e-shape bottom-left"></div>
+                            <div class="e-shape bottom-right"></div>
+                            <div class="cross-vertical"></div>
+                            <div class="cross-horizontal"></div>
+                        </div>
+                    </div>
+                    <div class="logo-text">ENTROPY</div>
+                </div>
+                <div class="entropy-tagline">Documentation AI Assistant</div>
+                <div class="entropy-description">
+                    Mining nothingness, creating everything.<br>
+                    Get instant answers from official Entropy documentation.
+                </div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)KKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKimport streamlit as st
 import requests
 import anthropic
 import base64
@@ -125,22 +162,112 @@ st.markdown("""
         position: relative;
     }
     
-    .portrait-placeholder {
-        width: 80%;
-        height: 80%;
-        background: rgba(255, 255, 255, 0.2);
+    .portrait-recreation {
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #87ceeb 0%, #ff6b9d 50%, #9b59b6 100%);
     }
     
-    .portrait-placeholder::before {
-        content: '👤';
-        font-size: 4rem;
-        opacity: 0.7;
+    .portrait-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #87ceeb 20%, #ff6b9d 60%, #9b59b6 100%);
+    }
+    
+    .portrait-figure-1 {
+        position: absolute;
+        top: 15%;
+        left: 15%;
+        width: 35%;
+        height: 60%;
+        background: linear-gradient(45deg, #2c3e50, #34495e);
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
+    
+    .portrait-figure-2 {
+        position: absolute;
+        top: 20%;
+        right: 20%;
+        width: 30%;
+        height: 55%;
+        background: linear-gradient(45deg, #8e44ad, #9b59b6);
+        border-radius: 50%;
+        opacity: 0.8;
+        box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    }
+    
+    .entropy-symbol {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: #ff6b9d;
+        border-radius: 8px;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+    
+    .e-shape {
+        position: absolute;
+        background: white;
+    }
+    
+    .e-shape.top-left {
+        top: 8px;
+        left: 8px;
+        width: 12px;
+        height: 12px;
+        clip-path: polygon(0 0, 70% 0, 70% 25%, 50% 25%, 50% 45%, 70% 45%, 70% 70%, 50% 70%, 50% 100%, 0 100%);
+    }
+    
+    .e-shape.top-right {
+        top: 8px;
+        right: 8px;
+        width: 12px;
+        height: 12px;
+        clip-path: polygon(30% 0, 100% 0, 100% 100%, 50% 100%, 50% 70%, 30% 70%, 30% 45%, 50% 45%, 50% 25%, 30% 25%);
+    }
+    
+    .e-shape.bottom-left {
+        bottom: 8px;
+        left: 8px;
+        width: 12px;
+        height: 12px;
+        clip-path: polygon(0 0, 50% 0, 50% 30%, 70% 30%, 70% 55%, 50% 55%, 50% 75%, 70% 75%, 70% 100%, 0 100%);
+    }
+    
+    .e-shape.bottom-right {
+        bottom: 8px;
+        right: 8px;
+        width: 12px;
+        height: 12px;
+        clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%, 30% 75%, 50% 75%, 50% 55%, 30% 55%, 30% 30%, 50% 30%, 50% 0);
+    }
+    
+    .cross-vertical {
+        position: absolute;
+        top: 4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 3px;
+        height: calc(100% - 8px);
+        background: white;
+    }
+    
+    .cross-horizontal {
+        position: absolute;
+        top: 50%;
+        left: 4px;
+        transform: translateY(-50%);
+        width: calc(100% - 8px);
+        height: 3px;
+        background: white;
     }
     
     .branding-section {
