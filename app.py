@@ -634,12 +634,7 @@ def main():
             return
     
     # Main content
-    st.markdown("""
-<div class="entropy-header">
-    <div class="entropy-banner-content">
-    </div>
-</div>
-""", unsafe_allow_html=True)
+   
     
     if 'entropy_chatbot' in st.session_state:
         
