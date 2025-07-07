@@ -637,7 +637,6 @@ def main():
     st.markdown("""
 <div class="entropy-header">
     <div class="entropy-banner-content">
-        # ... existing HTML content
     </div>
 </div>
 """, unsafe_allow_html=True)
