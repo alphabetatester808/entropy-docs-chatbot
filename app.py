@@ -65,14 +65,11 @@ st.markdown("""
     /* Logo and header */
     .entropy-header {
         background: linear-gradient(135deg, #87ceeb 0%, #ff6b9d 50%, #9b59b6 100%);
-        padding: 5rem 2rem;
+        padding: 3rem 2rem;
         text-align: center;
         border-bottom: 1px solid #2a2a2a;
         position: relative;
         overflow: hidden;
-        min-height: 60vh;
-        display: flex;
-        align-items: center;
     }
     
     .entropy-header::before {
@@ -92,23 +89,22 @@ st.markdown("""
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 4rem;
-        max-width: 1200px;
+        gap: 3rem;
+        max-width: 1000px;
         margin: 0 auto;
         flex-wrap: wrap;
-        width: 100%;
     }
     
     .portrait-section {
         flex: 1;
-        min-width: 350px;
+        min-width: 300px;
         display: flex;
         justify-content: center;
     }
     
     .portrait-container {
-        width: 300px;
-        height: 300px;
+        width: 350px;
+        height: 350px;
         border-radius: 50%;
         background: linear-gradient(45deg, #ff6b9d, #9b59b6);
         padding: 6px;
@@ -577,13 +573,12 @@ st.markdown("""
         }
         
         .entropy-header {
-            padding: 3rem 1rem;
-            min-height: 50vh;
+            padding: 2rem 1rem;
         }
         
         .entropy-banner-content {
             flex-direction: column;
-            gap: 3rem;
+            gap: 2rem;
             text-align: center;
         }
         
@@ -596,20 +591,12 @@ st.markdown("""
         }
         
         .portrait-container {
-            width: 200px;
-            height: 200px;
+            width: 250px;
+            height: 250px;
         }
         
         .logo-text {
-            font-size: 2.5rem;
-        }
-        
-        .entropy-tagline {
-            font-size: 1.2rem;
-        }
-        
-        .entropy-description {
-            font-size: 1rem;
+            font-size: 2rem;
         }
     }
 </style>
