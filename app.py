@@ -1,4 +1,10 @@
-import streamlit as st
+.banner-image-container {
+            padding: 1.5rem;
+        }
+        
+        .banner-image-container img {
+            max-width: 300px !important;
+        }import streamlit as st
 import requests
 import anthropic
 import base64
@@ -103,15 +109,14 @@ st.markdown("""
     }
     
     .portrait-container {
-        width: 350px;
-        height: 350px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
         background: linear-gradient(45deg, #ff6b9d, #9b59b6);
-        padding: 6px;
+        padding: 4px;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 8px 32px rgba(255, 107, 157, 0.3);
     }
     
     .portrait-recreation {
@@ -256,23 +261,37 @@ st.markdown("""
         text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
     
+    .banner-image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(255, 107, 157, 0.2);
+    }
+    
     .entropy-tagline {
         font-family: 'Inter', sans-serif;
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         color: #ffffff;
-        font-weight: 500;
+        font-weight: 600;
         text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         opacity: 0.95;
+        text-align: center;
     }
     
     .entropy-description {
         font-family: 'Inter', sans-serif;
-        font-size: 1rem;
+        font-size: 1.1rem;
         color: rgba(255, 255, 255, 0.9);
         margin-top: 1rem;
         line-height: 1.6;
         font-weight: 400;
         text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        text-align: center;
     }
     
     /* Main content area */
@@ -591,8 +610,8 @@ st.markdown("""
         }
         
         .portrait-container {
-            width: 250px;
-            height: 250px;
+            width: 150px;
+            height: 150px;
         }
         
         .logo-text {
@@ -810,7 +829,7 @@ def main():
     if 'conversation_history' not in st.session_state:
         st.session_state.conversation_history = []
     
-    # Header with actual images from Imgur
+    # Header with actual images from Imgur - larger banner image
     st.markdown("""
     <div class="entropy-header">
         <div class="entropy-banner-content">
@@ -821,12 +840,9 @@ def main():
                 </div>
             </div>
             <div class="branding-section">
-                <div class="entropy-logo">
-                    <div class="logo-icon">
-                        <img src="https://i.imgur.com/xSrtpTL.jpeg" alt="Entropy Logo" 
-                             style="width: 100%; height: 100%; object-fit: contain;">
-                    </div>
-                    <div class="logo-text">ENTROPY</div>
+                <div class="banner-image-container">
+                    <img src="https://i.imgur.com/xSrtpTL.jpeg" alt="Entropy Banner" 
+                         style="width: 100%; height: auto; max-width: 500px; object-fit: contain;">
                 </div>
                 <div class="entropy-tagline">Documentation AI Assistant</div>
                 <div class="entropy-description">
