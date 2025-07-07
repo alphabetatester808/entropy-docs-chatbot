@@ -532,7 +532,14 @@ class EntropyDocsChatbot:
         context_parts = []
         for i, exchange in enumerate(conversation_history[-3:]):
             context_parts.append(f"Previous Question {i+1}: {exchange['question']}")
-            context_parts.append(f"Previous Answer {i+1}: {exchange['answer'][:500]}...")
+            
+            # Handle both old string format and new dict format
+            if isinstance(exchange['answer'], dict):
+                answer_text = exchange['answer']['text']
+            else:
+                answer_text = exchange['answer']
+            
+            context_parts.append(f"Previous Answer {i+1}: {answer_text[:500]}...")
         
         return "\n\n".join(context_parts)
     
