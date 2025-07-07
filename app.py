@@ -536,18 +536,22 @@ class EntropyDocsChatbot:
         
         return "\n\n".join(context_parts)
     
-    def extract_citations(self, response_text: str) -> str:
-        """Add citation links to responses based on file references"""
+    def extract_citations(self, response_text: str) -> tuple:
+        """Extract citations and return both formatted text and citation links"""
         # Pattern to match file references like "According to README.md" or "As mentioned in getting-started.md"
         file_pattern = r'((?:According to|As mentioned in|Based on|From|In)\s+)([a-zA-Z0-9_-]+\.(?:md|txt|rst|mdx))'
         
-        def add_citation_link(match):
+        citations = []
+        
+        def extract_citation(match):
             prefix = match.group(1)
             filename = match.group(2)
             github_url = f"https://github.com/{self.repo_owner}/{self.repo_name}/blob/main/{filename}"
-            return f'{prefix}<a href="{github_url}" target="_blank" class="citation-link">{filename} 📖</a>'
+            citations.append((filename, github_url))
+            return f'{prefix}**{filename}**'
         
-        return re.sub(file_pattern, add_citation_link, response_text, flags=re.IGNORECASE)
+        formatted_text = re.sub(file_pattern, extract_citation, response_text, flags=re.IGNORECASE)
+        return formatted_text, citations
     
     def answer_entropy_question(self, question: str, conversation_history: List[Dict] = None) -> str:
         if not self.documents_cache or not self.is_cache_valid():
@@ -555,13 +559,13 @@ class EntropyDocsChatbot:
                 self.documents_cache = self.fetch_entropy_docs()
                 
             if not self.documents_cache:
-                return "Could not load Entropy documentation. Please try again later."
+                return {"text": "Could not load Entropy documentation. Please try again later.", "citations": []}
         
         context = self.prepare_entropy_context(self.documents_cache)
         conversation_context = self.prepare_conversation_context(conversation_history) if conversation_history else ""
         
         if not context:
-            return "No Entropy documentation content available."
+            return {"text": "No Entropy documentation content available.", "citations": []}
         
         system_prompt = f"""You are the official Entropy documentation assistant. You help users understand the Entropy project, which is a unique DePIN (Decentralized Physical Infrastructure Network) memecoin that mines "useless" entropy.
 
@@ -604,14 +608,17 @@ Remember: You are specifically here to help with Entropy - the project that mine
                 )
             
             response_text = response.content[0].text
-            return self.extract_citations(response_text)
+            formatted_text, citations = self.extract_citations(response_text)
+            
+            # Return both the formatted text and citations
+            return {"text": formatted_text, "citations": citations}
             
         except anthropic.AuthenticationError:
-            return "Invalid Claude API key. Please check the API key configuration."
+            return {"text": "Invalid Claude API key. Please check the API key configuration.", "citations": []}
         except anthropic.RateLimitError:
-            return "Rate limit exceeded. Please wait a moment and try again."
+            return {"text": "Rate limit exceeded. Please wait a moment and try again.", "citations": []}
         except Exception as e:
-            return f"Error generating response: {str(e)}"
+            return {"text": f"Error generating response: {str(e)}", "citations": []}
 
 def create_sidebar():
     """Create sidebar with project links and information"""
@@ -621,7 +628,7 @@ def create_sidebar():
             <div class="sidebar-title">🎲 Entropy Project</div>
             <a href="https://justentropy.lol" target="_blank" class="sidebar-link">🌐 Main Website</a>
             <a href="https://github.com/justentropy-lol/entropy-docs" target="_blank" class="sidebar-link">📚 Documentation</a>
-            <a href="https://discord.gg/minerseatfirst" target="_blank" class="sidebar-link">💬 Discord Community</a>
+            <a href="https://discord.gg/entropy" target="_blank" class="sidebar-link">💬 Discord Community</a>
             <a href="https://x.com/JustEntropyLol" target="_blank" class="sidebar-link">🐦 Twitter/X</a>
         </div>
         """, unsafe_allow_html=True)
@@ -630,14 +637,26 @@ def create_sidebar():
         <div class="sidebar-section">
             <div class="sidebar-title">⛏️ Mining & Hardware</div>
             <a href="https://heliumdeploy.com/products/ashlar" target="_blank" class="sidebar-link">🔥 Get Ashlar Device</a>
+            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/ashlar-setup.md" target="_blank" class="sidebar-link">⚙️ Ashlar Setup Guide</a>
+            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/mining-guide.md" target="_blank" class="sidebar-link">📖 Mining Guide</a>
         </div>
         """, unsafe_allow_html=True)
         
         st.markdown("""
         <div class="sidebar-section">
             <div class="sidebar-title">💰 Token & Economics</div>
-            <a href="https://www.coingecko.com/en/coins/entropy-2" target="_blank" class="sidebar-link">📈 $ENT Price Chart</a>
-            <a href="https://solscan.io/token/ENTxR2RP8NtvhXzMNFCxE1HazzdV9x7SuZqGyAb4jdED" target="_blank" class="sidebar-link">🔍 Token Contract</a>
+            <a href="https://dexscreener.com/solana/ent" target="_blank" class="sidebar-link">📈 $ENT Price Chart</a>
+            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/tokenomics.md" target="_blank" class="sidebar-link">🏦 Tokenomics</a>
+            <a href="https://solscan.io/token/ENTropyKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK" target="_blank" class="sidebar-link">🔍 Token Contract</a>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-title">📊 Analytics & Tools</div>
+            <a href="https://entropy-explorer.justentropy.lol" target="_blank" class="sidebar-link">🔍 Entropy Explorer</a>
+            <a href="https://stats.justentropy.lol" target="_blank" class="sidebar-link">📊 Network Stats</a>
+            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/api-docs.md" target="_blank" class="sidebar-link">🔌 API Documentation</a>
         </div>
         """, unsafe_allow_html=True)
         
@@ -715,13 +734,21 @@ def main():
                 </div>
                 """, unsafe_allow_html=True)
                 
-                # Assistant message with citations
+                # Assistant message
                 st.markdown(f"""
                 <div class="message assistant-message">
                     <div class="assistant-message-header">🎲 Entropy Response:</div>
-                    <div class="message-content">{exchange['answer']}</div>
+                    <div class="message-content">{exchange['answer']['text']}</div>
                 </div>
                 """, unsafe_allow_html=True)
+                
+                # Display citation links if any
+                if exchange['answer'].get('citations'):
+                    st.markdown("**📖 Sources:**")
+                    cols = st.columns(len(exchange['answer']['citations']))
+                    for i, (filename, url) in enumerate(exchange['answer']['citations']):
+                        with cols[i]:
+                            st.markdown(f"[{filename}]({url})", unsafe_allow_html=True)
             
             # Clear conversation button
             if st.button("🗑️ Clear Conversation", key="clear_conv"):
