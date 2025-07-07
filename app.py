@@ -23,7 +23,7 @@ def get_claude_api_key():
         st.error("❌ Claude API key not found in secrets. Please contact the administrator.")
         return None
 
-# Custom CSS with black and pink theme matching the logo
+# Custom CSS with black and pink theme and proper logo styling
 st.markdown("""
 <style>
     /* Import clean fonts */
@@ -78,18 +78,18 @@ st.markdown("""
         margin-bottom: 1rem;
     }
     
+    /* Actual Entropy logo styling - you'll need to replace the SVG content */
     .logo-icon {
         width: 48px;
         height: 48px;
-        background: linear-gradient(135deg, #ff6b9d, #c44569);
-        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: 600;
-        font-size: 1.2rem;
-        color: #ffffff;
+    }
+    
+    .logo-icon svg {
+        width: 100%;
+        height: 100%;
     }
     
     .logo-text {
@@ -113,6 +113,102 @@ st.markdown("""
         padding: 3rem 2rem;
         max-width: 900px;
         margin: 0 auto;
+    }
+    
+    /* Conversation history */
+    .conversation-history {
+        margin-bottom: 2rem;
+    }
+    
+    .message {
+        margin-bottom: 1.5rem;
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+    
+    .user-message {
+        background: #1a1a1a;
+        border: 1px solid #2a2a2a;
+        margin-left: 2rem;
+    }
+    
+    .user-message-header {
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .assistant-message {
+        background: #0a0a0a;
+        border: 1px solid #ff6b9d;
+        margin-right: 2rem;
+    }
+    
+    .assistant-message-header {
+        font-weight: 600;
+        color: #ff6b9d;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .message-content {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #e0e0e0;
+    }
+    
+    .message-content h1, .message-content h2, .message-content h3 {
+        color: #ffffff;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .message-content h1 {
+        font-size: 1.4rem;
+        color: #ff6b9d;
+    }
+    
+    .message-content h2 {
+        font-size: 1.2rem;
+    }
+    
+    .message-content h3 {
+        font-size: 1.1rem;
+    }
+    
+    .message-content code {
+        background: #1a1a1a;
+        color: #ff6b9d;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
+    }
+    
+    .message-content pre {
+        background: #1a1a1a;
+        border: 1px solid #2a2a2a;
+        border-radius: 8px;
+        padding: 1rem;
+        color: #ffffff;
+        font-family: 'JetBrains Mono', monospace;
+        overflow-x: auto;
+        margin: 1rem 0;
+    }
+    
+    .message-content ul, .message-content ol {
+        padding-left: 1.5rem;
+        margin: 1rem 0;
+    }
+    
+    .message-content li {
+        margin: 0.5rem 0;
     }
     
     /* Question grid */
@@ -143,6 +239,9 @@ st.markdown("""
         border-radius: 12px;
         padding: 2rem;
         margin-bottom: 2rem;
+        position: sticky;
+        bottom: 2rem;
+        z-index: 100;
     }
     
     .input-label {
@@ -154,84 +253,22 @@ st.markdown("""
         display: block;
     }
     
-    /* Chat response area */
-    .response-container {
-        background: #0a0a0a;
-        border: 1px solid #ff6b9d;
-        border-radius: 12px;
-        padding: 2rem;
-        margin-top: 2rem;
-    }
-    
-    .response-title {
+    .input-hint {
         font-family: 'Inter', sans-serif;
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #ff6b9d;
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-    
-    .response-content {
-        font-family: 'Inter', sans-serif;
-        font-size: 1rem;
-        line-height: 1.7;
-        color: #e0e0e0;
-    }
-    
-    .response-content h1, .response-content h2, .response-content h3 {
-        color: #ffffff;
-        font-weight: 600;
-        margin-top: 1.5rem;
-        margin-bottom: 1rem;
-    }
-    
-    .response-content h1 {
-        font-size: 1.4rem;
-        color: #ff6b9d;
-    }
-    
-    .response-content h2 {
-        font-size: 1.2rem;
-    }
-    
-    .response-content h3 {
-        font-size: 1.1rem;
-    }
-    
-    .response-content code {
-        background: #1a1a1a;
-        color: #ff6b9d;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        font-family: 'JetBrains Mono', monospace;
         font-size: 0.9rem;
+        color: #888888;
+        margin-top: 0.5rem;
+        text-align: center;
     }
     
-    .response-content pre {
-        background: #1a1a1a;
-        border: 1px solid #2a2a2a;
-        border-radius: 8px;
-        padding: 1rem;
-        color: #ffffff;
-        font-family: 'JetBrains Mono', monospace;
-        overflow-x: auto;
-        margin: 1rem 0;
-    }
-    
-    .response-content ul, .response-content ol {
-        padding-left: 1.5rem;
-        margin: 1rem 0;
-    }
-    
-    .response-content li {
-        margin: 0.5rem 0;
+    /* Clear conversation button */
+    .clear-conversation {
+        text-align: center;
+        margin-bottom: 2rem;
     }
     
     /* Streamlit component overrides */
-    .stTextArea textarea {
+    .stTextInput input {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
         border: 1px solid #2a2a2a !important;
@@ -242,7 +279,7 @@ st.markdown("""
         line-height: 1.5 !important;
     }
     
-    .stTextArea textarea:focus {
+    .stTextInput input:focus {
         border-color: #ff6b9d !important;
         box-shadow: 0 0 0 1px #ff6b9d !important;
     }
@@ -371,8 +408,12 @@ st.markdown("""
             padding: 2rem 1rem;
         }
         
-        .chat-input-container, .response-container {
-            padding: 1.5rem;
+        .user-message {
+            margin-left: 0;
+        }
+        
+        .assistant-message {
+            margin-right: 0;
         }
     }
 </style>
@@ -504,7 +545,19 @@ class EntropyDocsChatbot:
         
         return "\n".join(context_parts)
     
-    def answer_entropy_question(self, question: str) -> str:
+    def prepare_conversation_context(self, conversation_history: List[Dict]) -> str:
+        """Prepare conversation history for context"""
+        if not conversation_history:
+            return ""
+        
+        context_parts = []
+        for i, exchange in enumerate(conversation_history[-3:]):  # Last 3 exchanges
+            context_parts.append(f"Previous Question {i+1}: {exchange['question']}")
+            context_parts.append(f"Previous Answer {i+1}: {exchange['answer'][:500]}...")  # Truncate long answers
+        
+        return "\n\n".join(context_parts)
+    
+    def answer_entropy_question(self, question: str, conversation_history: List[Dict] = None) -> str:
         if not self.documents_cache or not self.is_cache_valid():
             with st.spinner("Loading Entropy documentation..."):
                 self.documents_cache = self.fetch_entropy_docs()
@@ -513,6 +566,7 @@ class EntropyDocsChatbot:
                 return "Could not load Entropy documentation. Please try again later."
         
         context = self.prepare_entropy_context(self.documents_cache)
+        conversation_context = self.prepare_conversation_context(conversation_history) if conversation_history else ""
         
         if not context:
             return "No Entropy documentation content available."
@@ -527,19 +581,25 @@ Your expertise covers:
 - Technical aspects of entropy generation
 - DePIN concepts as they relate to Entropy
 
+CONVERSATION CONTEXT:
+You are having an ongoing conversation with the user. Here's the recent conversation history:
+{conversation_context}
+
 STRICT GUIDELINES:
 1. Answer ONLY using information from the Entropy documentation provided below
 2. If information isn't in the docs, clearly state "This information is not available in the Entropy documentation"
 3. Always cite specific files when referencing information (e.g., "According to README.md...")
-4. Embrace the unique nature of Entropy - it's meant to be "useless" and that's the point!
-5. Be helpful with setup instructions, mining guidance, and community rules
-6. Use the project's own terminology and maintain its playful tone where appropriate
-7. Provide step-by-step instructions when available in the docs
+4. For follow-up questions, reference previous parts of the conversation when relevant
+5. If asked to explain something in simpler terms, break down complex concepts step-by-step
+6. If asked for more detail, provide deeper explanations from the documentation
+7. Embrace the unique nature of Entropy - it's meant to be "useless" and that's the point!
+8. Be helpful with setup instructions, mining guidance, and community rules
+9. Use the project's own terminology and maintain its playful tone where appropriate
 
 Available Entropy Documentation:
 {context}
 
-Remember: You are specifically here to help with Entropy - the project that mines "nothing" but creates community and value through that very nothingness. Stay true to the project's unique philosophy while being maximally helpful."""
+Remember: You are specifically here to help with Entropy - the project that mines "nothing" but creates community and value through that very nothingness. Use the conversation history to provide more contextual and helpful follow-up responses."""
 
         try:
             with st.spinner("Analyzing Entropy documentation..."):
@@ -563,11 +623,49 @@ def main():
     # Get API key from secrets
     claude_api_key = get_claude_api_key()
     
-    # Header with logo
+    # Initialize conversation history
+    if 'conversation_history' not in st.session_state:
+        st.session_state.conversation_history = []
+    
+    # Header with logo - You'll need to replace this SVG with the actual Entropy logo
     st.markdown("""
     <div class="entropy-header">
         <div class="entropy-logo">
-            <div class="logo-icon">⟐</div>
+            <div class="logo-icon">
+                <!-- Actual Entropy logo recreation -->
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="8" fill="url(#gradient)"/>
+                    
+                    <!-- Top row of E shapes -->
+                    <rect x="6" y="6" width="14" height="3" fill="white"/>
+                    <rect x="6" y="12" width="8" height="3" fill="white"/>
+                    <rect x="6" y="18" width="14" height="3" fill="white"/>
+                    
+                    <rect x="28" y="6" width="14" height="3" fill="white"/>
+                    <rect x="34" y="12" width="8" height="3" fill="white"/>
+                    <rect x="28" y="18" width="14" height="3" fill="white"/>
+                    
+                    <!-- Central cross -->
+                    <rect x="22" y="3" width="4" height="42" fill="white"/>
+                    <rect x="3" y="22" width="42" height="4" fill="white"/>
+                    
+                    <!-- Bottom row of E shapes -->
+                    <rect x="6" y="27" width="14" height="3" fill="white"/>
+                    <rect x="6" y="33" width="8" height="3" fill="white"/>
+                    <rect x="6" y="39" width="14" height="3" fill="white"/>
+                    
+                    <rect x="28" y="27" width="14" height="3" fill="white"/>
+                    <rect x="34" y="33" width="8" height="3" fill="white"/>
+                    <rect x="28" y="39" width="14" height="3" fill="white"/>
+                    
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff6b9d"/>
+                            <stop offset="100%" style="stop-color:#e91e63"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
             <div class="logo-text">ENTROPY</div>
         </div>
         <div class="entropy-tagline">Documentation AI Assistant</div>
@@ -591,73 +689,102 @@ def main():
     st.markdown('<div class="main-content">', unsafe_allow_html=True)
     
     if 'entropy_chatbot' in st.session_state:
-        # Popular questions section
-        st.markdown("""
-        <div class="questions-section">
-            <div class="questions-title">Popular Questions</div>
-        </div>
-        """, unsafe_allow_html=True)
         
-        entropy_questions = [
-            "How do I set up my Ashlar mining device?",
-            "What is the Entropy project and how does it work?",
-            "How do I earn $ENT tokens through mining?",
-            "What are the community rules I need to follow?",
-            "How much can I earn mining entropy?",
-            "What is the Jeeter Deleter rule?",
-            "How do I connect my Ashlar to the network?",
-            "What makes Entropy different from other crypto projects?"
-        ]
+        # Display conversation history
+        if st.session_state.conversation_history:
+            st.markdown('<div class="conversation-history">', unsafe_allow_html=True)
+            
+            for exchange in st.session_state.conversation_history:
+                # User message
+                st.markdown(f"""
+                <div class="message user-message">
+                    <div class="user-message-header">You asked:</div>
+                    <div class="message-content">{exchange['question']}</div>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Assistant message
+                st.markdown(f"""
+                <div class="message assistant-message">
+                    <div class="assistant-message-header">🎲 Entropy Response:</div>
+                    <div class="message-content">{exchange['answer']}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+            # Clear conversation button
+            st.markdown('<div class="clear-conversation">', unsafe_allow_html=True)
+            if st.button("🗑️ Clear Conversation", key="clear_conv"):
+                st.session_state.conversation_history = []
+                st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
         
-        # Create question grid
-        cols = st.columns(2)
-        for i, question in enumerate(entropy_questions):
-            with cols[i % 2]:
-                if st.button(question, key=f"q_{i}", use_container_width=True):
-                    st.session_state.current_question = question
+        else:
+            # Popular questions section (only show when no conversation)
+            st.markdown("""
+            <div class="questions-section">
+                <div class="questions-title">Popular Questions</div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            entropy_questions = [
+                "How do I set up my Ashlar mining device?",
+                "What is the Entropy project and how does it work?",
+                "How do I earn $ENT tokens through mining?",
+                "What are the community rules I need to follow?",
+                "How much can I earn mining entropy?",
+                "What is the Jeeter Deleter rule?",
+                "How do I connect my Ashlar to the network?",
+                "What makes Entropy different from other crypto projects?"
+            ]
+            
+            # Create question grid
+            cols = st.columns(2)
+            for i, question in enumerate(entropy_questions):
+                with cols[i % 2]:
+                    if st.button(question, key=f"q_{i}", use_container_width=True):
+                        st.session_state.current_question = question
         
         # Chat input section
         st.markdown('<div class="chat-input-container">', unsafe_allow_html=True)
         st.markdown('<label class="input-label">Ask your question about Entropy:</label>', unsafe_allow_html=True)
         
-        question = st.text_area(
+        # Text input with Enter key submission
+        question = st.text_input(
             "",
             value=st.session_state.get('current_question', ''),
-            height=120,
             placeholder="e.g., How do I start mining entropy with my Ashlar device?",
             key="question_input",
             label_visibility="collapsed"
         )
         
-        # Submit button
-        col1, col2, col3 = st.columns([1, 1, 1])
-        with col2:
-            ask_button = st.button("Ask Entropy", type="primary", use_container_width=True)
-        
+        st.markdown('<div class="input-hint">💡 Press Enter to submit your question, or ask follow-up questions for more details</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
         
-        # Response section
-        if ask_button and question:
-            answer = st.session_state.entropy_chatbot.answer_entropy_question(question)
+        # Handle question submission (both button and Enter key)
+        if question and (question != st.session_state.get('last_question', '')):
+            # Update last question to prevent re-submission
+            st.session_state.last_question = question
             
-            st.markdown("""
-            <div class="response-container">
-                <div class="response-title">
-                    🎲 Entropy Response
-                </div>
-                <div class="response-content">
-            """, unsafe_allow_html=True)
+            # Get answer with conversation context
+            answer = st.session_state.entropy_chatbot.answer_entropy_question(
+                question, 
+                st.session_state.conversation_history
+            )
             
-            st.markdown(answer)
+            # Add to conversation history
+            st.session_state.conversation_history.append({
+                'question': question,
+                'answer': answer,
+                'timestamp': datetime.now()
+            })
             
-            st.markdown("""
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # Clear the current question
+            # Clear current question and rerun to show updated conversation
             if 'current_question' in st.session_state:
                 del st.session_state.current_question
+            
+            st.rerun()
     
     st.markdown('</div>', unsafe_allow_html=True)
     
