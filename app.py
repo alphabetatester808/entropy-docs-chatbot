@@ -64,27 +64,92 @@ st.markdown("""
     
     /* Logo and header */
     .entropy-header {
-        background: #000000;
-        padding: 2rem 0;
+        background: linear-gradient(135deg, #87ceeb 0%, #ff6b9d 50%, #9b59b6 100%);
+        padding: 3rem 2rem;
         text-align: center;
         border-bottom: 1px solid #2a2a2a;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .entropy-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+    
+    .entropy-banner-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+        max-width: 1000px;
+        margin: 0 auto;
+        flex-wrap: wrap;
+    }
+    
+    .portrait-section {
+        flex: 1;
+        min-width: 300px;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .portrait-container {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #ff6b9d, #9b59b6);
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .portrait-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #87ceeb 0%, #ff6b9d 50%, #9b59b6 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: #ffffff;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .branding-section {
+        flex: 1;
+        min-width: 300px;
+        text-align: left;
     }
     
     .entropy-logo {
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        margin-bottom: 1rem;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+        justify-content: flex-start;
     }
     
-    /* Actual Entropy logo styling - you'll need to replace the SVG content */
     .logo-icon {
-        width: 48px;
-        height: 48px;
+        width: 64px;
+        height: 64px;
         display: flex;
         align-items: center;
         justify-content: center;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
     }
     
     .logo-icon svg {
@@ -94,18 +159,30 @@ st.markdown("""
     
     .logo-text {
         font-family: 'Inter', sans-serif;
-        font-size: 2rem;
+        font-size: 3rem;
         font-weight: 700;
         color: #ffffff;
         letter-spacing: 0.05em;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
     
     .entropy-tagline {
         font-family: 'Inter', sans-serif;
-        font-size: 1.1rem;
-        color: #888888;
-        margin-top: 0.5rem;
+        font-size: 1.3rem;
+        color: #ffffff;
+        font-weight: 500;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        opacity: 0.95;
+    }
+    
+    .entropy-description {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-top: 1rem;
+        line-height: 1.6;
         font-weight: 400;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
     }
     
     /* Main content area */
