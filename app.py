@@ -722,18 +722,26 @@ def main():
                 </div>
                 """, unsafe_allow_html=True)
                 
+                # Handle both old string format and new dict format
+                if isinstance(exchange['answer'], dict):
+                    answer_text = exchange['answer']['text']
+                    citations = exchange['answer'].get('citations', [])
+                else:
+                    answer_text = exchange['answer']
+                    citations = []
+                
                 # Assistant message
                 st.markdown(f"""
                 <div class="message assistant-message">
                     <div class="assistant-message-header">🎲 Entropy Response:</div>
-                    <div class="message-content">{exchange['answer']['text']}</div>
+                    <div class="message-content">{answer_text}</div>
                 </div>
                 """, unsafe_allow_html=True)
                 
                 # Display citation links if any
-                if exchange['answer'].get('citations'):
+                if citations:
                     st.write("**📖 Sources:**")
-                    for filename, url in exchange['answer']['citations']:
+                    for filename, url in citations:
                         st.markdown(f"🔗 [{filename}]({url})")
             
             # Clear conversation button
