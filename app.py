@@ -1,41 +1,4 @@
-# Header with CSS-based recreations of your images
-    st.markdown("""
-    <div class="entropy-header">
-        <div class="entropy-banner-content">
-            <div class="portrait-section">
-                <div class="portrait-container">
-                    <div class="portrait-recreation">
-                        <!-- CSS recreation of the artistic portrait -->
-                        <div class="portrait-bg"></div>
-                        <div class="portrait-figure-1"></div>
-                        <div class="portrait-figure-2"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="branding-section">
-                <div class="entropy-logo">
-                    <div class="logo-icon">
-                        <!-- Pure CSS recreation of Entropy logo -->
-                        <div class="entropy-symbol">
-                            <div class="e-shape top-left"></div>
-                            <div class="e-shape top-right"></div>
-                            <div class="e-shape bottom-left"></div>
-                            <div class="e-shape bottom-right"></div>
-                            <div class="cross-vertical"></div>
-                            <div class="cross-horizontal"></div>
-                        </div>
-                    </div>
-                    <div class="logo-text">ENTROPY</div>
-                </div>
-                <div class="entropy-tagline">Documentation AI Assistant</div>
-                <div class="entropy-description">
-                    Mining nothingness, creating everything.<br>
-                    Get instant answers from official Entropy documentation.
-                </div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)KKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKimport streamlit as st
+import streamlit as st
 import requests
 import anthropic
 import base64
@@ -60,7 +23,7 @@ def get_claude_api_key():
         st.error("❌ Claude API key not found in secrets. Please contact the administrator.")
         return None
 
-# Custom CSS with black and pink theme and proper logo styling
+# Custom CSS with black and pink theme and image recreations
 st.markdown("""
 <style>
     /* Import clean fonts */
@@ -150,18 +113,6 @@ st.markdown("""
         justify-content: center;
     }
     
-    .portrait-image {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #87ceeb 0%, #ff6b9d 50%, #9b59b6 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        position: relative;
-    }
-    
     .portrait-recreation {
         width: 100%;
         height: 100%;
@@ -203,73 +154,6 @@ st.markdown("""
         box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
     }
     
-    .entropy-symbol {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        background: #ff6b9d;
-        border-radius: 8px;
-        padding: 8px;
-        box-sizing: border-box;
-    }
-    
-    .e-shape {
-        position: absolute;
-        background: white;
-    }
-    
-    .e-shape.top-left {
-        top: 8px;
-        left: 8px;
-        width: 12px;
-        height: 12px;
-        clip-path: polygon(0 0, 70% 0, 70% 25%, 50% 25%, 50% 45%, 70% 45%, 70% 70%, 50% 70%, 50% 100%, 0 100%);
-    }
-    
-    .e-shape.top-right {
-        top: 8px;
-        right: 8px;
-        width: 12px;
-        height: 12px;
-        clip-path: polygon(30% 0, 100% 0, 100% 100%, 50% 100%, 50% 70%, 30% 70%, 30% 45%, 50% 45%, 50% 25%, 30% 25%);
-    }
-    
-    .e-shape.bottom-left {
-        bottom: 8px;
-        left: 8px;
-        width: 12px;
-        height: 12px;
-        clip-path: polygon(0 0, 50% 0, 50% 30%, 70% 30%, 70% 55%, 50% 55%, 50% 75%, 70% 75%, 70% 100%, 0 100%);
-    }
-    
-    .e-shape.bottom-right {
-        bottom: 8px;
-        right: 8px;
-        width: 12px;
-        height: 12px;
-        clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%, 30% 75%, 50% 75%, 50% 55%, 30% 55%, 30% 30%, 50% 30%, 50% 0);
-    }
-    
-    .cross-vertical {
-        position: absolute;
-        top: 4px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 3px;
-        height: calc(100% - 8px);
-        background: white;
-    }
-    
-    .cross-horizontal {
-        position: absolute;
-        top: 50%;
-        left: 4px;
-        transform: translateY(-50%);
-        width: calc(100% - 8px);
-        height: 3px;
-        background: white;
-    }
-    
     .branding-section {
         flex: 1;
         min-width: 300px;
@@ -295,9 +179,71 @@ st.markdown("""
         backdrop-filter: blur(10px);
     }
     
-    .logo-icon svg {
-        width: 100%;
-        height: 100%;
+    .entropy-symbol {
+        position: relative;
+        width: 48px;
+        height: 48px;
+        background: #ff6b9d;
+        border-radius: 8px;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+    
+    .e-shape {
+        position: absolute;
+        background: white;
+    }
+    
+    .e-shape.top-left {
+        top: 6px;
+        left: 6px;
+        width: 12px;
+        height: 12px;
+        clip-path: polygon(0 0, 70% 0, 70% 25%, 50% 25%, 50% 45%, 70% 45%, 70% 70%, 50% 70%, 50% 100%, 0 100%);
+    }
+    
+    .e-shape.top-right {
+        top: 6px;
+        right: 6px;
+        width: 12px;
+        height: 12px;
+        clip-path: polygon(30% 0, 100% 0, 100% 100%, 50% 100%, 50% 70%, 30% 70%, 30% 45%, 50% 45%, 50% 25%, 30% 25%);
+    }
+    
+    .e-shape.bottom-left {
+        bottom: 6px;
+        left: 6px;
+        width: 12px;
+        height: 12px;
+        clip-path: polygon(0 0, 50% 0, 50% 30%, 70% 30%, 70% 55%, 50% 55%, 50% 75%, 70% 75%, 70% 100%, 0 100%);
+    }
+    
+    .e-shape.bottom-right {
+        bottom: 6px;
+        right: 6px;
+        width: 12px;
+        height: 12px;
+        clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%, 30% 75%, 50% 75%, 50% 55%, 30% 55%, 30% 30%, 50% 30%, 50% 0);
+    }
+    
+    .cross-vertical {
+        position: absolute;
+        top: 4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 3px;
+        height: calc(100% - 8px);
+        background: white;
+    }
+    
+    .cross-horizontal {
+        position: absolute;
+        top: 50%;
+        left: 4px;
+        transform: translateY(-50%);
+        width: calc(100% - 8px);
+        height: 3px;
+        background: white;
     }
     
     .logo-text {
@@ -443,13 +389,6 @@ st.markdown("""
         color: #ffffff;
         margin-bottom: 1.5rem;
         text-align: center;
-    }
-    
-    .questions-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        gap: 1rem;
-        margin-bottom: 2rem;
     }
     
     /* Chat input area */
@@ -616,10 +555,6 @@ st.markdown("""
     
     /* Responsive design */
     @media (max-width: 768px) {
-        .questions-grid {
-            grid-template-columns: 1fr;
-        }
-        
         .logo-text {
             font-size: 2rem;
         }
@@ -870,48 +805,40 @@ def main():
     if 'conversation_history' not in st.session_state:
         st.session_state.conversation_history = []
     
-    # Header with logo - You'll need to replace this SVG with the actual Entropy logo
+    # Header with CSS-based recreations of your images
     st.markdown("""
     <div class="entropy-header">
-        <div class="entropy-logo">
-            <div class="logo-icon">
-                <!-- Actual Entropy logo recreation -->
-                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="48" height="48" rx="8" fill="url(#gradient)"/>
-                    
-                    <!-- Top row of E shapes -->
-                    <rect x="6" y="6" width="14" height="3" fill="white"/>
-                    <rect x="6" y="12" width="8" height="3" fill="white"/>
-                    <rect x="6" y="18" width="14" height="3" fill="white"/>
-                    
-                    <rect x="28" y="6" width="14" height="3" fill="white"/>
-                    <rect x="34" y="12" width="8" height="3" fill="white"/>
-                    <rect x="28" y="18" width="14" height="3" fill="white"/>
-                    
-                    <!-- Central cross -->
-                    <rect x="22" y="3" width="4" height="42" fill="white"/>
-                    <rect x="3" y="22" width="42" height="4" fill="white"/>
-                    
-                    <!-- Bottom row of E shapes -->
-                    <rect x="6" y="27" width="14" height="3" fill="white"/>
-                    <rect x="6" y="33" width="8" height="3" fill="white"/>
-                    <rect x="6" y="39" width="14" height="3" fill="white"/>
-                    
-                    <rect x="28" y="27" width="14" height="3" fill="white"/>
-                    <rect x="34" y="33" width="8" height="3" fill="white"/>
-                    <rect x="28" y="39" width="14" height="3" fill="white"/>
-                    
-                    <defs>
-                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#ff6b9d"/>
-                            <stop offset="100%" style="stop-color:#e91e63"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
+        <div class="entropy-banner-content">
+            <div class="portrait-section">
+                <div class="portrait-container">
+                    <div class="portrait-recreation">
+                        <div class="portrait-bg"></div>
+                        <div class="portrait-figure-1"></div>
+                        <div class="portrait-figure-2"></div>
+                    </div>
+                </div>
             </div>
-            <div class="logo-text">ENTROPY</div>
+            <div class="branding-section">
+                <div class="entropy-logo">
+                    <div class="logo-icon">
+                        <div class="entropy-symbol">
+                            <div class="e-shape top-left"></div>
+                            <div class="e-shape top-right"></div>
+                            <div class="e-shape bottom-left"></div>
+                            <div class="e-shape bottom-right"></div>
+                            <div class="cross-vertical"></div>
+                            <div class="cross-horizontal"></div>
+                        </div>
+                    </div>
+                    <div class="logo-text">ENTROPY</div>
+                </div>
+                <div class="entropy-tagline">Documentation AI Assistant</div>
+                <div class="entropy-description">
+                    Mining nothingness, creating everything.<br>
+                    Get instant answers from official Entropy documentation.
+                </div>
+            </div>
         </div>
-        <div class="entropy-tagline">Documentation AI Assistant</div>
     </div>
     """, unsafe_allow_html=True)
     
