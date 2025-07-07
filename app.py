@@ -543,7 +543,7 @@ def main():
     
     # Header with actual images
     st.markdown("""
-    <div class="entropy-header">
+   <div class="entropy-header">
         <div class="entropy-banner-content">
             <div class="portrait-section">
                 <div class="portrait-container">
@@ -552,10 +552,6 @@ def main():
                 </div>
             </div>
             <div class="branding-section">
-                <div class="banner-image-container">
-                    <img src="https://i.imgur.com/xSrtpTL.jpeg" alt="Entropy Banner" 
-                         style="width: 100%; height: auto; max-width: 500px; object-fit: contain;">
-                </div>
                 <div class="entropy-tagline">Documentation AI Assistant</div>
                 <div class="entropy-description">
                     Mining nothingness, creating everything.<br>
@@ -580,7 +576,13 @@ def main():
             return
     
     # Main content
-    st.markdown('<div class="main-content">', unsafe_allow_html=True)
+    st.markdown("""
+<div class="entropy-header">
+    <div class="entropy-banner-content">
+        # ... existing HTML content
+    </div>
+</div>
+""", unsafe_allow_html=True)
     
     if 'entropy_chatbot' in st.session_state:
         
