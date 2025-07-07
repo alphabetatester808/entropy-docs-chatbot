@@ -1,10 +1,4 @@
-.banner-image-container {
-            padding: 1.5rem;
-        }
-        
-        .banner-image-container img {
-            max-width: 300px !important;
-        }import streamlit as st
+import streamlit as st
 import requests
 import anthropic
 import base64
@@ -29,46 +23,22 @@ def get_claude_api_key():
         st.error("❌ Claude API key not found in secrets. Please contact the administrator.")
         return None
 
-# Custom CSS with black and pink theme and image recreations
+# Custom CSS
 st.markdown("""
 <style>
-    /* Import clean fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
-    /* Hide Streamlit elements */
-    .stApp > header {
-        background-color: transparent;
-    }
+    .stApp > header { background-color: transparent; }
+    .stDeployButton { display: none; }
+    #MainMenu { display: none; }
+    footer { visibility: hidden; }
+    .viewerBadge_container__1QSob { display: none; }
     
-    .stDeployButton {
-        display: none;
-    }
-    
-    #MainMenu {
-        display: none;
-    }
-    
-    footer {
-        visibility: hidden;
-    }
-    
-    .viewerBadge_container__1QSob {
-        display: none;
-    }
-    
-    .stAppViewContainer .main .block-container {
-        padding-top: 1rem;
-        padding-bottom: 2rem;
-        max-width: 1200px;
-    }
-    
-    /* Main app styling */
     .stApp {
         background-color: #000000;
         color: #ffffff;
     }
     
-    /* Logo and header */
     .entropy-header {
         background: linear-gradient(135deg, #87ceeb 0%, #ff6b9d 50%, #9b59b6 100%);
         padding: 3rem 2rem;
@@ -119,146 +89,10 @@ st.markdown("""
         justify-content: center;
     }
     
-    .portrait-recreation {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        position: relative;
-        overflow: hidden;
-        background: linear-gradient(135deg, #87ceeb 0%, #ff6b9d 50%, #9b59b6 100%);
-    }
-    
-    .portrait-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #87ceeb 20%, #ff6b9d 60%, #9b59b6 100%);
-    }
-    
-    .portrait-figure-1 {
-        position: absolute;
-        top: 15%;
-        left: 15%;
-        width: 35%;
-        height: 60%;
-        background: linear-gradient(45deg, #2c3e50, #34495e);
-        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-        box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-    }
-    
-    .portrait-figure-2 {
-        position: absolute;
-        top: 20%;
-        right: 20%;
-        width: 30%;
-        height: 55%;
-        background: linear-gradient(45deg, #8e44ad, #9b59b6);
-        border-radius: 50%;
-        opacity: 0.8;
-        box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-    }
-    
     .branding-section {
         flex: 1;
         min-width: 300px;
-        text-align: left;
-    }
-    
-    .entropy-logo {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        margin-bottom: 1.5rem;
-        justify-content: flex-start;
-    }
-    
-    .logo-icon {
-        width: 64px;
-        height: 64px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        backdrop-filter: blur(10px);
-    }
-    
-    .entropy-symbol {
-        position: relative;
-        width: 48px;
-        height: 48px;
-        background: #ff6b9d;
-        border-radius: 8px;
-        padding: 8px;
-        box-sizing: border-box;
-    }
-    
-    .e-shape {
-        position: absolute;
-        background: white;
-    }
-    
-    .e-shape.top-left {
-        top: 6px;
-        left: 6px;
-        width: 12px;
-        height: 12px;
-        clip-path: polygon(0 0, 70% 0, 70% 25%, 50% 25%, 50% 45%, 70% 45%, 70% 70%, 50% 70%, 50% 100%, 0 100%);
-    }
-    
-    .e-shape.top-right {
-        top: 6px;
-        right: 6px;
-        width: 12px;
-        height: 12px;
-        clip-path: polygon(30% 0, 100% 0, 100% 100%, 50% 100%, 50% 70%, 30% 70%, 30% 45%, 50% 45%, 50% 25%, 30% 25%);
-    }
-    
-    .e-shape.bottom-left {
-        bottom: 6px;
-        left: 6px;
-        width: 12px;
-        height: 12px;
-        clip-path: polygon(0 0, 50% 0, 50% 30%, 70% 30%, 70% 55%, 50% 55%, 50% 75%, 70% 75%, 70% 100%, 0 100%);
-    }
-    
-    .e-shape.bottom-right {
-        bottom: 6px;
-        right: 6px;
-        width: 12px;
-        height: 12px;
-        clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%, 30% 75%, 50% 75%, 50% 55%, 30% 55%, 30% 30%, 50% 30%, 50% 0);
-    }
-    
-    .cross-vertical {
-        position: absolute;
-        top: 4px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 3px;
-        height: calc(100% - 8px);
-        background: white;
-    }
-    
-    .cross-horizontal {
-        position: absolute;
-        top: 50%;
-        left: 4px;
-        transform: translateY(-50%);
-        width: calc(100% - 8px);
-        height: 3px;
-        background: white;
-    }
-    
-    .logo-text {
-        font-family: 'Inter', sans-serif;
-        font-size: 3rem;
-        font-weight: 700;
-        color: #ffffff;
-        letter-spacing: 0.05em;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        text-align: center;
     }
     
     .banner-image-container {
@@ -294,16 +128,10 @@ st.markdown("""
         text-align: center;
     }
     
-    /* Main content area */
     .main-content {
         padding: 3rem 2rem;
         max-width: 900px;
         margin: 0 auto;
-    }
-    
-    /* Conversation history */
-    .conversation-history {
-        margin-bottom: 2rem;
     }
     
     .message {
@@ -348,60 +176,6 @@ st.markdown("""
         color: #e0e0e0;
     }
     
-    .message-content h1, .message-content h2, .message-content h3 {
-        color: #ffffff;
-        font-weight: 600;
-        margin-top: 1.5rem;
-        margin-bottom: 1rem;
-    }
-    
-    .message-content h1 {
-        font-size: 1.4rem;
-        color: #ff6b9d;
-    }
-    
-    .message-content h2 {
-        font-size: 1.2rem;
-    }
-    
-    .message-content h3 {
-        font-size: 1.1rem;
-    }
-    
-    .message-content code {
-        background: #1a1a1a;
-        color: #ff6b9d;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.9rem;
-    }
-    
-    .message-content pre {
-        background: #1a1a1a;
-        border: 1px solid #2a2a2a;
-        border-radius: 8px;
-        padding: 1rem;
-        color: #ffffff;
-        font-family: 'JetBrains Mono', monospace;
-        overflow-x: auto;
-        margin: 1rem 0;
-    }
-    
-    .message-content ul, .message-content ol {
-        padding-left: 1.5rem;
-        margin: 1rem 0;
-    }
-    
-    .message-content li {
-        margin: 0.5rem 0;
-    }
-    
-    /* Question grid */
-    .questions-section {
-        margin-bottom: 3rem;
-    }
-    
     .questions-title {
         font-family: 'Inter', sans-serif;
         font-size: 1.3rem;
@@ -411,7 +185,6 @@ st.markdown("""
         text-align: center;
     }
     
-    /* Chat input area */
     .chat-input-container {
         background: #111111;
         border: 1px solid #2a2a2a;
@@ -440,13 +213,6 @@ st.markdown("""
         text-align: center;
     }
     
-    /* Clear conversation button */
-    .clear-conversation {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-    
-    /* Streamlit component overrides */
     .stTextInput input {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -482,11 +248,6 @@ st.markdown("""
         box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3) !important;
     }
     
-    .stButton button:active {
-        transform: translateY(0) !important;
-    }
-    
-    /* Question buttons styling */
     div[data-testid="column"] .stButton button {
         background: #1a1a1a !important;
         color: #ffffff !important;
@@ -510,7 +271,6 @@ st.markdown("""
         box-shadow: 0 4px 12px rgba(255, 107, 157, 0.2) !important;
     }
     
-    /* Success/Error messages */
     .stSuccess {
         background-color: #1a2e1a !important;
         color: #90ee90 !important;
@@ -525,19 +285,6 @@ st.markdown("""
         border-radius: 8px !important;
     }
     
-    .stWarning {
-        background-color: #2e2a1a !important;
-        color: #ffd700 !important;
-        border: 1px solid #5a4d2d !important;
-        border-radius: 8px !important;
-    }
-    
-    /* Loading spinner */
-    .stSpinner > div {
-        border-top-color: #ff6b9d !important;
-    }
-    
-    /* Footer */
     .entropy-footer {
         background: #000000;
         border-top: 1px solid #2a2a2a;
@@ -573,50 +320,16 @@ st.markdown("""
         margin-top: 1rem;
     }
     
-    /* Responsive design */
     @media (max-width: 768px) {
-        .logo-text {
-            font-size: 2rem;
-        }
-        
-        .main-content {
-            padding: 2rem 1rem;
-        }
-        
-        .user-message {
-            margin-left: 0;
-        }
-        
-        .assistant-message {
-            margin-right: 0;
-        }
-        
-        .entropy-header {
-            padding: 2rem 1rem;
-        }
-        
-        .entropy-banner-content {
-            flex-direction: column;
-            gap: 2rem;
-            text-align: center;
-        }
-        
-        .branding-section {
-            text-align: center;
-        }
-        
-        .entropy-logo {
-            justify-content: center;
-        }
-        
-        .portrait-container {
-            width: 150px;
-            height: 150px;
-        }
-        
-        .logo-text {
-            font-size: 2rem;
-        }
+        .main-content { padding: 2rem 1rem; }
+        .user-message { margin-left: 0; }
+        .assistant-message { margin-right: 0; }
+        .entropy-header { padding: 2rem 1rem; }
+        .entropy-banner-content { flex-direction: column; gap: 2rem; text-align: center; }
+        .branding-section { text-align: center; }
+        .portrait-container { width: 150px; height: 150px; }
+        .banner-image-container { padding: 1rem; }
+        .banner-image-container img { max-width: 300px; }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -748,14 +461,13 @@ class EntropyDocsChatbot:
         return "\n".join(context_parts)
     
     def prepare_conversation_context(self, conversation_history: List[Dict]) -> str:
-        """Prepare conversation history for context"""
         if not conversation_history:
             return ""
         
         context_parts = []
-        for i, exchange in enumerate(conversation_history[-3:]):  # Last 3 exchanges
+        for i, exchange in enumerate(conversation_history[-3:]):
             context_parts.append(f"Previous Question {i+1}: {exchange['question']}")
-            context_parts.append(f"Previous Answer {i+1}: {exchange['answer'][:500]}...")  # Truncate long answers
+            context_parts.append(f"Previous Answer {i+1}: {exchange['answer'][:500]}...")
         
         return "\n\n".join(context_parts)
     
@@ -829,13 +541,13 @@ def main():
     if 'conversation_history' not in st.session_state:
         st.session_state.conversation_history = []
     
-    # Header with actual images from Imgur - larger banner image
+    # Header with actual images
     st.markdown("""
     <div class="entropy-header">
         <div class="entropy-banner-content">
             <div class="portrait-section">
                 <div class="portrait-container">
-                    <img src="https://i.imgur.com/PGEpQIF.jpeg" alt="Entropy Portrait" 
+                    <img src="https://i.imgur.com/PGEpQIF.jpeg" alt="Entropy Logo" 
                          style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
@@ -874,8 +586,6 @@ def main():
         
         # Display conversation history
         if st.session_state.conversation_history:
-            st.markdown('<div class="conversation-history">', unsafe_allow_html=True)
-            
             for exchange in st.session_state.conversation_history:
                 # User message
                 st.markdown(f"""
@@ -893,21 +603,15 @@ def main():
                 </div>
                 """, unsafe_allow_html=True)
             
-            st.markdown('</div>', unsafe_allow_html=True)
-            
             # Clear conversation button
-            st.markdown('<div class="clear-conversation">', unsafe_allow_html=True)
             if st.button("🗑️ Clear Conversation", key="clear_conv"):
                 st.session_state.conversation_history = []
                 st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
         
         else:
             # Popular questions section (only show when no conversation)
             st.markdown("""
-            <div class="questions-section">
-                <div class="questions-title">Popular Questions</div>
-            </div>
+            <div class="questions-title">Popular Questions</div>
             """, unsafe_allow_html=True)
             
             entropy_questions = [
