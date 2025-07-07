@@ -6,13 +6,14 @@ from typing import Dict, List
 import time
 import hashlib
 from datetime import datetime, timedelta
+import re
 
 # Page config
 st.set_page_config(
     page_title="ENTROPY Documentation AI",
     page_icon="🎲",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 # Get API key from secrets
@@ -39,7 +40,7 @@ st.markdown("""
         color: #ffffff;
     }
     
-   .entropy-header {
+    .entropy-header {
         background-image: url('https://i.imgur.com/xSrtpTL.jpeg');
         background-size: cover;
         background-position: center;
@@ -103,10 +104,6 @@ st.markdown("""
         max-width: 600px;
     }
     
-    .banner-image-container {
-        display: none;
-    }
-    
     .entropy-tagline {
         font-family: 'Inter', sans-serif;
         font-size: 2.5rem;
@@ -125,64 +122,6 @@ st.markdown("""
         line-height: 1.6;
         font-weight: 600;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
-        text-align: center;
-    }
-    
-    @media (max-width: 768px) {
-        .entropy-header { 
-            padding: 3rem 1rem; 
-            min-height: 400px;
-        }
-        .entropy-banner-content { 
-            flex-direction: column; 
-            gap: 2rem; 
-            text-align: center; 
-        }
-        .portrait-container { 
-            width: 140px; 
-            height: 140px; 
-        }
-        .entropy-tagline {
-            font-size: 2rem;
-        }
-        .entropy-description {
-            font-size: 1.1rem;
-        }
-        .branding-section {
-            max-width: 100%;
-        }
-    }
-    
-    .banner-image-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 2rem;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 2rem;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px rgba(255, 107, 157, 0.2);
-    }
-    
-    .entropy-tagline {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.5rem;
-        color: #ffffff;
-        font-weight: 600;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        opacity: 0.95;
-        text-align: center;
-    }
-    
-    .entropy-description {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.1rem;
-        color: rgba(255, 255, 255, 0.9);
-        margin-top: 1rem;
-        line-height: 1.6;
-        font-weight: 400;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         text-align: center;
     }
     
@@ -232,6 +171,19 @@ st.markdown("""
         font-size: 1rem;
         line-height: 1.7;
         color: #e0e0e0;
+    }
+    
+    .citation-link {
+        color: #ff6b9d;
+        text-decoration: none;
+        font-weight: 500;
+        border-bottom: 1px dotted #ff6b9d;
+        margin-left: 0.5rem;
+    }
+    
+    .citation-link:hover {
+        color: #ff5a8e;
+        text-decoration: none;
     }
     
     .questions-title {
@@ -329,6 +281,45 @@ st.markdown("""
         box-shadow: 0 4px 12px rgba(255, 107, 157, 0.2) !important;
     }
     
+    .sidebar-section {
+        background: #111111;
+        border: 1px solid #2a2a2a;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .sidebar-title {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ff6b9d;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .sidebar-link {
+        display: block;
+        color: #e0e0e0;
+        text-decoration: none;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #2a2a2a;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+    
+    .sidebar-link:hover {
+        color: #ff6b9d;
+        text-decoration: none;
+    }
+    
+    .sidebar-link:last-child {
+        border-bottom: none;
+    }
+    
     .stSuccess {
         background-color: #1a2e1a !important;
         color: #90ee90 !important;
@@ -382,12 +373,28 @@ st.markdown("""
         .main-content { padding: 2rem 1rem; }
         .user-message { margin-left: 0; }
         .assistant-message { margin-right: 0; }
-        .entropy-header { padding: 2rem 1rem; }
-        .entropy-banner-content { flex-direction: column; gap: 2rem; text-align: center; }
-        .branding-section { text-align: center; }
-        .portrait-container { width: 150px; height: 150px; }
-        .banner-image-container { padding: 1rem; }
-        .banner-image-container img { max-width: 300px; }
+        .entropy-header { 
+            padding: 3rem 1rem; 
+            min-height: 400px;
+        }
+        .entropy-banner-content { 
+            flex-direction: column; 
+            gap: 2rem; 
+            text-align: center; 
+        }
+        .portrait-container { 
+            width: 140px; 
+            height: 140px; 
+        }
+        .entropy-tagline {
+            font-size: 2rem;
+        }
+        .entropy-description {
+            font-size: 1.1rem;
+        }
+        .branding-section {
+            max-width: 100%;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -529,6 +536,19 @@ class EntropyDocsChatbot:
         
         return "\n\n".join(context_parts)
     
+    def extract_citations(self, response_text: str) -> str:
+        """Add citation links to responses based on file references"""
+        # Pattern to match file references like "According to README.md" or "As mentioned in getting-started.md"
+        file_pattern = r'((?:According to|As mentioned in|Based on|From|In)\s+)([a-zA-Z0-9_-]+\.(?:md|txt|rst|mdx))'
+        
+        def add_citation_link(match):
+            prefix = match.group(1)
+            filename = match.group(2)
+            github_url = f"https://github.com/{self.repo_owner}/{self.repo_name}/blob/main/{filename}"
+            return f'{prefix}<a href="{github_url}" target="_blank" class="citation-link">{filename} 📖</a>'
+        
+        return re.sub(file_pattern, add_citation_link, response_text, flags=re.IGNORECASE)
+    
     def answer_entropy_question(self, question: str, conversation_history: List[Dict] = None) -> str:
         if not self.documents_cache or not self.is_cache_valid():
             with st.spinner("Loading Entropy documentation..."):
@@ -560,18 +580,19 @@ You are having an ongoing conversation with the user. Here's the recent conversa
 STRICT GUIDELINES:
 1. Answer ONLY using information from the Entropy documentation provided below
 2. If information isn't in the docs, clearly state "This information is not available in the Entropy documentation"
-3. Always cite specific files when referencing information (e.g., "According to README.md...")
+3. ALWAYS cite specific files when referencing information using phrases like "According to README.md" or "As mentioned in getting-started.md"
 4. For follow-up questions, reference previous parts of the conversation when relevant
 5. If asked to explain something in simpler terms, break down complex concepts step-by-step
 6. If asked for more detail, provide deeper explanations from the documentation
 7. Embrace the unique nature of Entropy - it's meant to be "useless" and that's the point!
 8. Be helpful with setup instructions, mining guidance, and community rules
 9. Use the project's own terminology and maintain its playful tone where appropriate
+10. IMPORTANT: Always reference the specific documentation file you're citing from
 
 Available Entropy Documentation:
 {context}
 
-Remember: You are specifically here to help with Entropy - the project that mines "nothing" but creates community and value through that very nothingness. Use the conversation history to provide more contextual and helpful follow-up responses."""
+Remember: You are specifically here to help with Entropy - the project that mines "nothing" but creates community and value through that very nothingness. Use the conversation history to provide more contextual and helpful follow-up responses. Always cite the specific documentation files you reference."""
 
         try:
             with st.spinner("Analyzing Entropy documentation..."):
@@ -582,7 +603,8 @@ Remember: You are specifically here to help with Entropy - the project that mine
                     messages=[{"role": "user", "content": question}]
                 )
             
-            return response.content[0].text
+            response_text = response.content[0].text
+            return self.extract_citations(response_text)
             
         except anthropic.AuthenticationError:
             return "Invalid Claude API key. Please check the API key configuration."
@@ -591,15 +613,71 @@ Remember: You are specifically here to help with Entropy - the project that mine
         except Exception as e:
             return f"Error generating response: {str(e)}"
 
+def create_sidebar():
+    """Create sidebar with project links and information"""
+    with st.sidebar:
+        st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-title">🎲 Entropy Project</div>
+            <a href="https://justentropy.lol" target="_blank" class="sidebar-link">🌐 Main Website</a>
+            <a href="https://github.com/justentropy-lol/entropy-docs" target="_blank" class="sidebar-link">📚 Documentation</a>
+            <a href="https://discord.gg/entropy" target="_blank" class="sidebar-link">💬 Discord Community</a>
+            <a href="https://x.com/JustEntropyLol" target="_blank" class="sidebar-link">🐦 Twitter/X</a>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-title">⛏️ Mining & Hardware</div>
+            <a href="https://heliumdeploy.com/products/ashlar" target="_blank" class="sidebar-link">🔥 Get Ashlar Device</a>
+            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/ashlar-setup.md" target="_blank" class="sidebar-link">⚙️ Ashlar Setup Guide</a>
+            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/mining-guide.md" target="_blank" class="sidebar-link">📖 Mining Guide</a>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-title">💰 Token & Economics</div>
+            <a href="https://dexscreener.com/solana/ent" target="_blank" class="sidebar-link">📈 $ENT Price Chart</a>
+            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/tokenomics.md" target="_blank" class="sidebar-link">🏦 Tokenomics</a>
+            <a href="https://solscan.io/token/ENTropyKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK" target="_blank" class="sidebar-link">🔍 Token Contract</a>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-title">📊 Analytics & Tools</div>
+            <a href="https://entropy-explorer.justentropy.lol" target="_blank" class="sidebar-link">🔍 Entropy Explorer</a>
+            <a href="https://stats.justentropy.lol" target="_blank" class="sidebar-link">📊 Network Stats</a>
+            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/api-docs.md" target="_blank" class="sidebar-link">🔌 API Documentation</a>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-title">ℹ️ About This AI</div>
+            <p style="color: #888; font-size: 0.8rem; margin: 0; padding: 0.5rem 0;">
+                This AI assistant provides answers based on official Entropy documentation. 
+                All responses include links to the source documents for verification.
+            </p>
+            <p style="color: #ff6b9d; font-size: 0.8rem; margin: 0; padding: 0.5rem 0;">
+                Powered by Claude AI
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
 def main():
     # Get API key from secrets
     claude_api_key = get_claude_api_key()
+    
+    # Create sidebar
+    create_sidebar()
     
     # Initialize conversation history
     if 'conversation_history' not in st.session_state:
         st.session_state.conversation_history = []
     
-    # Header with actual images
+    # Header
     st.markdown("""
     <div class="entropy-header">
         <div class="entropy-banner-content">
@@ -634,7 +712,7 @@ def main():
             return
     
     # Main content
-   
+    st.markdown('<div class="main-content">', unsafe_allow_html=True)
     
     if 'entropy_chatbot' in st.session_state:
         
@@ -649,7 +727,7 @@ def main():
                 </div>
                 """, unsafe_allow_html=True)
                 
-                # Assistant message
+                # Assistant message with citations
                 st.markdown(f"""
                 <div class="message assistant-message">
                     <div class="assistant-message-header">🎲 Entropy Response:</div>
