@@ -638,7 +638,7 @@ def create_sidebar():
         st.markdown("""
         <div class="sidebar-section">
             <div class="sidebar-title">💰 Token & Economics</div>
-            <a href="https://dexscreener.com/solana/ent" target="_blank" class="sidebar-link">📈 $ENT Price Chart</a>
+            <a href="https://www.coingecko.com/en/coins/entropy-2" target="_blank" class="sidebar-link">📈 $ENT Price Chart</a>
             <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/tokenomics.md" target="_blank" class="sidebar-link">🏦 Tokenomics</a>
             <a href="https://solscan.io/token/ENTropyKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK" target="_blank" class="sidebar-link">🔍 Token Contract</a>
         </div>
