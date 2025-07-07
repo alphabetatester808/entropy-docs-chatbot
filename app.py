@@ -39,13 +39,20 @@ st.markdown("""
         color: #ffffff;
     }
     
-    .entropy-header {
-        background: linear-gradient(135deg, #87ceeb 0%, #ff6b9d 50%, #9b59b6 100%);
-        padding: 3rem 2rem;
+   .entropy-header {
+        background-image: url('https://i.imgur.com/xSrtpTL.jpeg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 4rem 2rem;
         text-align: center;
         border-bottom: 1px solid #2a2a2a;
         position: relative;
         overflow: hidden;
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .entropy-header::before {
@@ -55,7 +62,7 @@ st.markdown("""
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.2);
+        background: rgba(0, 0, 0, 0.4);
         z-index: 1;
     }
     
@@ -65,34 +72,85 @@ st.markdown("""
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 3rem;
-        max-width: 1000px;
+        gap: 4rem;
+        max-width: 1200px;
         margin: 0 auto;
         flex-wrap: wrap;
+        width: 100%;
     }
     
     .portrait-section {
-        flex: 1;
-        min-width: 300px;
+        flex: 0 0 auto;
         display: flex;
         justify-content: center;
     }
     
     .portrait-container {
-        width: 200px;
-        height: 200px;
+        width: 180px;
+        height: 180px;
         border-radius: 50%;
         background: linear-gradient(45deg, #ff6b9d, #9b59b6);
         padding: 4px;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0 12px 40px rgba(255, 107, 157, 0.4);
     }
     
     .branding-section {
         flex: 1;
-        min-width: 300px;
         text-align: center;
+        max-width: 600px;
+    }
+    
+    .banner-image-container {
+        display: none;
+    }
+    
+    .entropy-tagline {
+        font-family: 'Inter', sans-serif;
+        font-size: 2.5rem;
+        color: #ffffff;
+        font-weight: 800;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
+        margin-bottom: 1.5rem;
+        text-align: center;
+        line-height: 1.2;
+    }
+    
+    .entropy-description {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.4rem;
+        color: rgba(255, 255, 255, 0.95);
+        line-height: 1.6;
+        font-weight: 600;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+        text-align: center;
+    }
+    
+    @media (max-width: 768px) {
+        .entropy-header { 
+            padding: 3rem 1rem; 
+            min-height: 400px;
+        }
+        .entropy-banner-content { 
+            flex-direction: column; 
+            gap: 2rem; 
+            text-align: center; 
+        }
+        .portrait-container { 
+            width: 140px; 
+            height: 140px; 
+        }
+        .entropy-tagline {
+            font-size: 2rem;
+        }
+        .entropy-description {
+            font-size: 1.1rem;
+        }
+        .branding-section {
+            max-width: 100%;
+        }
     }
     
     .banner-image-container {
@@ -543,7 +601,7 @@ def main():
     
     # Header with actual images
     st.markdown("""
-   <div class="entropy-header">
+    <div class="entropy-header">
         <div class="entropy-banner-content">
             <div class="portrait-section">
                 <div class="portrait-container">
