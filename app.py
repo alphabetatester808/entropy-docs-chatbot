@@ -628,7 +628,7 @@ def create_sidebar():
             <div class="sidebar-title">🎲 Entropy Project</div>
             <a href="https://justentropy.lol" target="_blank" class="sidebar-link">🌐 Main Website</a>
             <a href="https://github.com/justentropy-lol/entropy-docs" target="_blank" class="sidebar-link">📚 Documentation</a>
-            <a href="https://discord.gg/entropy" target="_blank" class="sidebar-link">💬 Discord Community</a>
+            <a href="https://discord.gg/minerseatfirst" target="_blank" class="sidebar-link">💬 Discord Community</a>
             <a href="https://x.com/JustEntropyLol" target="_blank" class="sidebar-link">🐦 Twitter/X</a>
         </div>
         """, unsafe_allow_html=True)
@@ -637,26 +637,14 @@ def create_sidebar():
         <div class="sidebar-section">
             <div class="sidebar-title">⛏️ Mining & Hardware</div>
             <a href="https://heliumdeploy.com/products/ashlar" target="_blank" class="sidebar-link">🔥 Get Ashlar Device</a>
-            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/ashlar-setup.md" target="_blank" class="sidebar-link">⚙️ Ashlar Setup Guide</a>
-            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/mining-guide.md" target="_blank" class="sidebar-link">📖 Mining Guide</a>
         </div>
         """, unsafe_allow_html=True)
         
         st.markdown("""
         <div class="sidebar-section">
             <div class="sidebar-title">💰 Token & Economics</div>
-            <a href="https://dexscreener.com/solana/ent" target="_blank" class="sidebar-link">📈 $ENT Price Chart</a>
-            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/tokenomics.md" target="_blank" class="sidebar-link">🏦 Tokenomics</a>
-            <a href="https://solscan.io/token/ENTropyKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK" target="_blank" class="sidebar-link">🔍 Token Contract</a>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("""
-        <div class="sidebar-section">
-            <div class="sidebar-title">📊 Analytics & Tools</div>
-            <a href="https://entropy-explorer.justentropy.lol" target="_blank" class="sidebar-link">🔍 Entropy Explorer</a>
-            <a href="https://stats.justentropy.lol" target="_blank" class="sidebar-link">📊 Network Stats</a>
-            <a href="https://github.com/justentropy-lol/entropy-docs/blob/main/api-docs.md" target="_blank" class="sidebar-link">🔌 API Documentation</a>
+            <a href="https://www.coingecko.com/en/coins/entropy-2" target="_blank" class="sidebar-link">📈 $ENT Price Chart</a>
+            <a href="https://solscan.io/token/ENTxR2RP8NtvhXzMNFCxE1HazzdV9x7SuZqGyAb4jdED" target="_blank" class="sidebar-link">🔍 Token Contract</a>
         </div>
         """, unsafe_allow_html=True)
         
@@ -744,11 +732,9 @@ def main():
                 
                 # Display citation links if any
                 if exchange['answer'].get('citations'):
-                    st.markdown("**📖 Sources:**")
-                    cols = st.columns(len(exchange['answer']['citations']))
-                    for i, (filename, url) in enumerate(exchange['answer']['citations']):
-                        with cols[i]:
-                            st.markdown(f"[{filename}]({url})", unsafe_allow_html=True)
+                    st.write("**📖 Sources:**")
+                    for filename, url in exchange['answer']['citations']:
+                        st.markdown(f"🔗 [{filename}]({url})")
             
             # Clear conversation button
             if st.button("🗑️ Clear Conversation", key="clear_conv"):
@@ -828,7 +814,7 @@ def main():
             <a href="https://justentropy.lol" class="footer-link" target="_blank">Main Site</a>
             <a href="https://github.com/justentropy-lol/entropy-docs" class="footer-link" target="_blank">Documentation</a>
             <a href="https://heliumdeploy.com/products/ashlar" class="footer-link" target="_blank">Get Ashlar Device</a>
-            <a href="https://discord.gg/entropy" class="footer-link" target="_blank">Discord Community</a>
+            <a href="https://discord.gg/minerseatfirst" class="footer-link" target="_blank">Discord Community</a>
         </div>
         <div class="footer-text">
             Built with ❤️ for the Entropy community | Powered by Claude AI
