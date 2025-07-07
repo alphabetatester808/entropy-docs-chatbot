@@ -65,11 +65,14 @@ st.markdown("""
     /* Logo and header */
     .entropy-header {
         background: linear-gradient(135deg, #87ceeb 0%, #ff6b9d 50%, #9b59b6 100%);
-        padding: 3rem 2rem;
+        padding: 5rem 2rem;
         text-align: center;
         border-bottom: 1px solid #2a2a2a;
         position: relative;
         overflow: hidden;
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
     }
     
     .entropy-header::before {
@@ -89,28 +92,30 @@ st.markdown("""
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 3rem;
-        max-width: 1000px;
+        gap: 4rem;
+        max-width: 1200px;
         margin: 0 auto;
         flex-wrap: wrap;
+        width: 100%;
     }
     
     .portrait-section {
         flex: 1;
-        min-width: 300px;
+        min-width: 350px;
         display: flex;
         justify-content: center;
     }
     
     .portrait-container {
-        width: 200px;
-        height: 200px;
+        width: 300px;
+        height: 300px;
         border-radius: 50%;
         background: linear-gradient(45deg, #ff6b9d, #9b59b6);
-        padding: 4px;
+        padding: 6px;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0 8px 32px rgba(255, 107, 157, 0.3);
     }
     
     .portrait-recreation {
@@ -572,12 +577,13 @@ st.markdown("""
         }
         
         .entropy-header {
-            padding: 2rem 1rem;
+            padding: 3rem 1rem;
+            min-height: 50vh;
         }
         
         .entropy-banner-content {
             flex-direction: column;
-            gap: 2rem;
+            gap: 3rem;
             text-align: center;
         }
         
@@ -590,8 +596,20 @@ st.markdown("""
         }
         
         .portrait-container {
-            width: 150px;
-            height: 150px;
+            width: 200px;
+            height: 200px;
+        }
+        
+        .logo-text {
+            font-size: 2.5rem;
+        }
+        
+        .entropy-tagline {
+            font-size: 1.2rem;
+        }
+        
+        .entropy-description {
+            font-size: 1rem;
         }
     }
 </style>
