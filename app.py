@@ -261,7 +261,7 @@ Remember: You are specifically here to help with Entropy - the project that mine
         try:
             with st.spinner("🤔 Analyzing Entropy documentation..."):
                 response = self.client.messages.create(
-                    model="claude-3-sonnet-20240229",
+                    model="claude-3-5-sonnet-20241022",
                     max_tokens=2500,
                     system=system_prompt,
                     messages=[{"role": "user", "content": question}]
