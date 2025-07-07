@@ -23,11 +23,11 @@ def get_claude_api_key():
         st.error("❌ Claude API key not found in secrets. Please contact the administrator.")
         return None
 
-# Custom CSS matching justentropy.lol aesthetic
+# Custom CSS with black and pink theme matching the logo
 st.markdown("""
 <style>
-    /* Import similar fonts */
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+    /* Import clean fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
     
     /* Hide Streamlit elements */
     .stApp > header {
@@ -42,224 +42,6 @@ st.markdown("""
         display: none;
     }
     
-    .stAppViewContainer .main .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        max-width: 1000px;
-    }
-    
-    /* Main layout */
-    .entropy-container {
-        background: #000000;
-        color: #ffffff;
-        min-height: 100vh;
-        font-family: 'Inter', sans-serif;
-        padding: 0;
-        margin: 0;
-    }
-    
-    /* Header styling - matching justentropy.lol */
-    .entropy-header {
-        text-align: center;
-        padding: 4rem 2rem 2rem 2rem;
-        background: #000000;
-        border-bottom: 1px solid #333;
-    }
-    
-    .entropy-title {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 3rem;
-        font-weight: 700;
-        color: #ffffff;
-        margin: 0;
-        letter-spacing: 0.1em;
-    }
-    
-    .entropy-subtitle {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.2rem;
-        color: #888888;
-        margin: 1rem 0 0 0;
-        font-weight: 400;
-    }
-    
-    .entropy-tagline {
-        font-family: 'Inter', sans-serif;
-        font-size: 1rem;
-        color: #666666;
-        margin: 2rem 0 0 0;
-        line-height: 1.6;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    /* Main content area */
-    .entropy-main {
-        background: #000000;
-        padding: 2rem;
-        min-height: 60vh;
-    }
-    
-    /* Chat interface */
-    .chat-container {
-        max-width: 800px;
-        margin: 0 auto;
-        background: #111111;
-        border: 1px solid #333333;
-        border-radius: 0;
-        padding: 0;
-    }
-    
-    .chat-input-section {
-        padding: 2rem;
-        border-bottom: 1px solid #333333;
-    }
-    
-    .chat-response-section {
-        padding: 2rem;
-        background: #0a0a0a;
-        border-top: 1px solid #333333;
-    }
-    
-    /* Typography for responses */
-    .entropy-response {
-        font-family: 'Inter', sans-serif;
-        font-size: 1rem;
-        line-height: 1.7;
-        color: #e0e0e0;
-    }
-    
-    .entropy-response h1, .entropy-response h2, .entropy-response h3 {
-        color: #ffffff;
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: 600;
-    }
-    
-    .entropy-response code {
-        background: #1a1a1a;
-        color: #ffffff;
-        padding: 0.2rem 0.4rem;
-        border-radius: 2px;
-        font-family: 'JetBrains Mono', monospace;
-        border: 1px solid #333333;
-    }
-    
-    .entropy-response pre {
-        background: #1a1a1a;
-        border: 1px solid #333333;
-        border-radius: 0;
-        padding: 1rem;
-        color: #ffffff;
-        font-family: 'JetBrains Mono', monospace;
-        overflow-x: auto;
-    }
-    
-    /* Question buttons */
-    .question-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1rem;
-        margin: 2rem 0;
-    }
-    
-    .question-btn {
-        background: #1a1a1a;
-        border: 1px solid #333333;
-        color: #ffffff;
-        padding: 1rem;
-        text-align: left;
-        font-family: 'Inter', sans-serif;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border-radius: 0;
-    }
-    
-    .question-btn:hover {
-        background: #2a2a2a;
-        border-color: #555555;
-        transform: translateY(-1px);
-    }
-    
-    /* Footer */
-    .entropy-footer {
-        background: #000000;
-        color: #666666;
-        text-align: center;
-        padding: 3rem 2rem;
-        border-top: 1px solid #333333;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.8rem;
-    }
-    
-    /* Streamlit component overrides */
-    .stTextArea textarea {
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-        border-radius: 0 !important;
-        font-family: 'Inter', sans-serif !important;
-        font-size: 1rem !important;
-        padding: 1rem !important;
-    }
-    
-    .stTextArea textarea:focus {
-        border-color: #555555 !important;
-        box-shadow: none !important;
-    }
-    
-    .stButton button {
-        background-color: #ffffff !important;
-        color: #000000 !important;
-        border: none !important;
-        border-radius: 0 !important;
-        font-family: 'JetBrains Mono', monospace !important;
-        font-weight: 600 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.1em !important;
-        padding: 0.8rem 2rem !important;
-        font-size: 0.9rem !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .stButton button:hover {
-        background-color: #e0e0e0 !important;
-        transform: translateY(-1px) !important;
-    }
-    
-    .stSelectbox div[data-baseweb="select"] {
-        background-color: #1a1a1a !important;
-        border-color: #333333 !important;
-        border-radius: 0 !important;
-    }
-    
-    .stSelectbox div[data-baseweb="select"] > div {
-        color: #ffffff !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    
-    /* Loading spinner */
-    .stSpinner {
-        color: #ffffff !important;
-    }
-    
-    /* Status messages */
-    .stSuccess {
-        background-color: #1a2e1a !important;
-        color: #90ee90 !important;
-        border: 1px solid #2d5a2d !important;
-        border-radius: 0 !important;
-    }
-    
-    .stError {
-        background-color: #2e1a1a !important;
-        color: #ff6b6b !important;
-        border: 1px solid #5a2d2d !important;
-        border-radius: 0 !important;
-    }
-    
-    /* Hide Streamlit branding */
     footer {
         visibility: hidden;
     }
@@ -268,22 +50,330 @@ st.markdown("""
         display: none;
     }
     
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-        width: 8px;
+    .stAppViewContainer .main .block-container {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+        max-width: 1200px;
     }
     
-    ::-webkit-scrollbar-track {
+    /* Main app styling */
+    .stApp {
+        background-color: #000000;
+        color: #ffffff;
+    }
+    
+    /* Logo and header */
+    .entropy-header {
+        background: #000000;
+        padding: 2rem 0;
+        text-align: center;
+        border-bottom: 1px solid #2a2a2a;
+    }
+    
+    .entropy-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .logo-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, #ff6b9d, #c44569);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: #ffffff;
+    }
+    
+    .logo-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 0.05em;
+    }
+    
+    .entropy-tagline {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.1rem;
+        color: #888888;
+        margin-top: 0.5rem;
+        font-weight: 400;
+    }
+    
+    /* Main content area */
+    .main-content {
+        padding: 3rem 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    /* Question grid */
+    .questions-section {
+        margin-bottom: 3rem;
+    }
+    
+    .questions-title {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    
+    .questions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* Chat input area */
+    .chat-input-container {
+        background: #111111;
+        border: 1px solid #2a2a2a;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .input-label {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 1rem;
+        display: block;
+    }
+    
+    /* Chat response area */
+    .response-container {
+        background: #0a0a0a;
+        border: 1px solid #ff6b9d;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .response-title {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #ff6b9d;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .response-content {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #e0e0e0;
+    }
+    
+    .response-content h1, .response-content h2, .response-content h3 {
+        color: #ffffff;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .response-content h1 {
+        font-size: 1.4rem;
+        color: #ff6b9d;
+    }
+    
+    .response-content h2 {
+        font-size: 1.2rem;
+    }
+    
+    .response-content h3 {
+        font-size: 1.1rem;
+    }
+    
+    .response-content code {
         background: #1a1a1a;
+        color: #ff6b9d;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
     }
     
-    ::-webkit-scrollbar-thumb {
-        background: #333333;
-        border-radius: 0;
+    .response-content pre {
+        background: #1a1a1a;
+        border: 1px solid #2a2a2a;
+        border-radius: 8px;
+        padding: 1rem;
+        color: #ffffff;
+        font-family: 'JetBrains Mono', monospace;
+        overflow-x: auto;
+        margin: 1rem 0;
     }
     
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555555;
+    .response-content ul, .response-content ol {
+        padding-left: 1.5rem;
+        margin: 1rem 0;
+    }
+    
+    .response-content li {
+        margin: 0.5rem 0;
+    }
+    
+    /* Streamlit component overrides */
+    .stTextArea textarea {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #2a2a2a !important;
+        border-radius: 8px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 1rem !important;
+        padding: 1rem !important;
+        line-height: 1.5 !important;
+    }
+    
+    .stTextArea textarea:focus {
+        border-color: #ff6b9d !important;
+        box-shadow: 0 0 0 1px #ff6b9d !important;
+    }
+    
+    .stButton button {
+        background: linear-gradient(135deg, #ff6b9d, #c44569) !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 8px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 2rem !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+        text-transform: none !important;
+    }
+    
+    .stButton button:hover {
+        background: linear-gradient(135deg, #ff5a8e, #b83e5c) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3) !important;
+    }
+    
+    .stButton button:active {
+        transform: translateY(0) !important;
+    }
+    
+    /* Question buttons styling */
+    div[data-testid="column"] .stButton button {
+        background: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #2a2a2a !important;
+        border-radius: 8px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 400 !important;
+        padding: 1rem !important;
+        font-size: 0.9rem !important;
+        text-align: left !important;
+        width: 100% !important;
+        height: auto !important;
+        white-space: normal !important;
+        line-height: 1.4 !important;
+    }
+    
+    div[data-testid="column"] .stButton button:hover {
+        background: #2a2a2a !important;
+        border-color: #ff6b9d !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(255, 107, 157, 0.2) !important;
+    }
+    
+    /* Success/Error messages */
+    .stSuccess {
+        background-color: #1a2e1a !important;
+        color: #90ee90 !important;
+        border: 1px solid #2d5a2d !important;
+        border-radius: 8px !important;
+    }
+    
+    .stError {
+        background-color: #2e1a1a !important;
+        color: #ff6b6b !important;
+        border: 1px solid #5a2d2d !important;
+        border-radius: 8px !important;
+    }
+    
+    .stWarning {
+        background-color: #2e2a1a !important;
+        color: #ffd700 !important;
+        border: 1px solid #5a4d2d !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Loading spinner */
+    .stSpinner > div {
+        border-top-color: #ff6b9d !important;
+    }
+    
+    /* Footer */
+    .entropy-footer {
+        background: #000000;
+        border-top: 1px solid #2a2a2a;
+        padding: 2rem;
+        text-align: center;
+        margin-top: 4rem;
+    }
+    
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .footer-link {
+        color: #888888;
+        text-decoration: none;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+    
+    .footer-link:hover {
+        color: #ff6b9d;
+    }
+    
+    .footer-text {
+        color: #666666;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8rem;
+        margin-top: 1rem;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .questions-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+        }
+        
+        .main-content {
+            padding: 2rem 1rem;
+        }
+        
+        .chat-input-container, .response-container {
+            padding: 1.5rem;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -473,21 +563,14 @@ def main():
     # Get API key from secrets
     claude_api_key = get_claude_api_key()
     
-    # Create the entropy container
-    st.markdown('<div class="entropy-container">', unsafe_allow_html=True)
-    
-    # Header section - matching justentropy.lol style
+    # Header with logo
     st.markdown("""
     <div class="entropy-header">
-        <h1 class="entropy-title">ENTROPY</h1>
-        <p class="entropy-subtitle">Documentation AI Assistant</p>
-        <p class="entropy-tagline">
-            Generate entropy. Earn $ENT.<br>
-            You know it.<br><br>
-            Ask questions about mining nothing.<br>
-            Get answers about everything.<br><br>
-            It's. Just. Entropy. LOL.
-        </p>
+        <div class="entropy-logo">
+            <div class="logo-icon">⟐</div>
+            <div class="logo-text">ENTROPY</div>
+        </div>
+        <div class="entropy-tagline">Documentation AI Assistant</div>
     </div>
     """, unsafe_allow_html=True)
     
@@ -499,22 +582,22 @@ def main():
     if 'entropy_chatbot' not in st.session_state:
         try:
             st.session_state.entropy_chatbot = EntropyDocsChatbot(claude_api_key)
-            st.success("Entropy AI Assistant is ready.")
+            st.success("✅ Entropy AI Assistant is ready!")
         except Exception as e:
             st.error(f"Failed to initialize: {e}")
             return
     
-    # Main content area
-    st.markdown('<div class="entropy-main">', unsafe_allow_html=True)
+    # Main content
+    st.markdown('<div class="main-content">', unsafe_allow_html=True)
     
     if 'entropy_chatbot' in st.session_state:
-        # Chat container
-        st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+        # Popular questions section
+        st.markdown("""
+        <div class="questions-section">
+            <div class="questions-title">Popular Questions</div>
+        </div>
+        """, unsafe_allow_html=True)
         
-        # Input section
-        st.markdown('<div class="chat-input-section">', unsafe_allow_html=True)
-        
-        # Example questions with custom styling
         entropy_questions = [
             "How do I set up my Ashlar mining device?",
             "What is the Entropy project and how does it work?",
@@ -526,63 +609,72 @@ def main():
             "What makes Entropy different from other crypto projects?"
         ]
         
-        st.markdown("### Popular Questions")
-        
-        # Create a grid of question buttons
+        # Create question grid
         cols = st.columns(2)
         for i, question in enumerate(entropy_questions):
             with cols[i % 2]:
                 if st.button(question, key=f"q_{i}", use_container_width=True):
                     st.session_state.current_question = question
         
-        st.markdown("---")
+        # Chat input section
+        st.markdown('<div class="chat-input-container">', unsafe_allow_html=True)
+        st.markdown('<label class="input-label">Ask your question about Entropy:</label>', unsafe_allow_html=True)
         
-        # Question input
         question = st.text_area(
-            "Ask your question:",
+            "",
             value=st.session_state.get('current_question', ''),
             height=120,
             placeholder="e.g., How do I start mining entropy with my Ashlar device?",
-            key="question_input"
+            key="question_input",
+            label_visibility="collapsed"
         )
         
         # Submit button
-        col1, col2, col3 = st.columns([1, 2, 1])
+        col1, col2, col3 = st.columns([1, 1, 1])
         with col2:
-            ask_button = st.button("ASK ENTROPY", type="primary", use_container_width=True)
+            ask_button = st.button("Ask Entropy", type="primary", use_container_width=True)
         
-        st.markdown('</div>', unsafe_allow_html=True)  # Close input section
+        st.markdown('</div>', unsafe_allow_html=True)
         
         # Response section
         if ask_button and question:
-            st.markdown('<div class="chat-response-section">', unsafe_allow_html=True)
-            
             answer = st.session_state.entropy_chatbot.answer_entropy_question(question)
             
-            st.markdown('<div class="entropy-response">', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="response-container">
+                <div class="response-title">
+                    🎲 Entropy Response
+                </div>
+                <div class="response-content">
+            """, unsafe_allow_html=True)
+            
             st.markdown(answer)
-            st.markdown('</div>', unsafe_allow_html=True)
+            
+            st.markdown("""
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
             
             # Clear the current question
             if 'current_question' in st.session_state:
                 del st.session_state.current_question
-            
-            st.markdown('</div>', unsafe_allow_html=True)  # Close response section
-        
-        st.markdown('</div>', unsafe_allow_html=True)  # Close chat container
     
-    st.markdown('</div>', unsafe_allow_html=True)  # Close main content
+    st.markdown('</div>', unsafe_allow_html=True)
     
-    # Footer - matching justentropy.lol style
+    # Footer
     st.markdown("""
     <div class="entropy-footer">
-        <p>© 2025 Just Entropy, Inc. All rights reserved.</p>
-        <p>Built with entropy for the entropy community.</p>
-        <p>It's. Just. Entropy. LOL.</p>
+        <div class="footer-links">
+            <a href="https://justentropy.lol" class="footer-link" target="_blank">Main Site</a>
+            <a href="https://github.com/justentropy-lol/entropy-docs" class="footer-link" target="_blank">Documentation</a>
+            <a href="https://heliumdeploy.com/products/ashlar" class="footer-link" target="_blank">Get Ashlar Device</a>
+            <a href="https://discord.gg/entropy" class="footer-link" target="_blank">Discord Community</a>
+        </div>
+        <div class="footer-text">
+            Built with ❤️ for the Entropy community | Powered by Claude AI
+        </div>
     </div>
     """, unsafe_allow_html=True)
-    
-    st.markdown('</div>', unsafe_allow_html=True)  # Close entropy container
 
 if __name__ == "__main__":
     main()
